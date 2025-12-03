@@ -1,0 +1,12 @@
+# Archivos de entorno (contraseñas)
+.env
+
+# Archivos de base de datos
+database.db
+
+# Carpetas de Python generadas
+__pycache__/
+*.pyc
+
+# Carpeta de imágenes subidas (normalmente no se suben al código fuente)
+static/uploads/
