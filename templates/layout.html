@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jarana Summer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Login Oculto (Zona clickeable arriba) -->
+        <a href="/login" class="hidden-login"></a>
+
+        <!-- Header -->
+        <div class="header-section">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo-img">
+            {% if config %}
+            <div class="header-text">{{ config.texto_header }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Contenido Principal (Empuja el footer) -->
+        <div class="main-content">
+            <!-- Navegación (Solo se muestra si page está definido, oculta en login/admin) -->
+            {% if page %}
+            <div class="nav-toggle">
+                <a href="/" class="nav-btn {% if page == 'rrpp' %}active{% else %}inactive{% endif %}">RRPP</a>
+                <a href="/transportes" class="nav-btn {% if page == 'transporte' %}active{% else %}inactive{% endif %}">Transportes</a>
+            </div>
+            {% endif %}
+
+            {% block content %}{% endblock %}
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            {% if config %}
+            {{ config.texto_footer }}
+            {% else %}
+            SYSTEM ERROR: NO CONFIG
+            {% endif %}
+        </footer>
+    </div>
+</body>
+</html>

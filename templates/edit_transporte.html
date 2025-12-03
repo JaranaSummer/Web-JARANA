@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="admin-panel">
+    <h3 class="admin-title">Editar Transporte</h3>
+    <form method="POST">
+        <label>Ciudad</label>
+        <input type="text" name="ciudad" value="{{ transporte.ciudad }}" required>
+        
+        <label>Nombre Empresa</label>
+        <input type="text" name="nombre_taxi" value="{{ transporte.nombre_taxi }}" required>
+        
+        <label>Dueño</label>
+        <input type="text" name="dueno" value="{{ transporte.dueno }}" required>
+        
+        <label>Descripción</label>
+        <input type="text" name="descripcion" value="{{ transporte.descripcion }}" required>
+        
+        <label>Precio</label>
+        <input type="text" name="precio" value="{{ transporte.precio }}" required>
+        
+        <label>Número WhatsApp</label>
+        <input type="text" name="whatsapp" value="{{ transporte.whatsapp }}" required>
+        
+        <button type="submit">Guardar Cambios</button>
+        <a href="/admin" class="back-link" style="text-align:center; margin-top:10px;">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

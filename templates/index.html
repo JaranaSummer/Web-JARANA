@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="rrpp-grid">
+    {% for rrpp in rrpps %}
+    <div class="rrpp-card">
+        <div class="rrpp-loc">{{ rrpp.localidad }}</div>
+        <div class="rrpp-name">{{ rrpp.nombre }}</div>
+        <img src="{{ url_for('static', filename='uploads/' + rrpp.foto_filename) }}" alt="Foto" class="rrpp-photo">
+         <a href="https://www.instagram.com/{{ rrpp.instagram }}" target="_blank" class="social-link ig">Instagram</a>
+        <a href="https://wa.me/{{ rrpp.whatsapp }}" target="_blank" class="social-link wa">Whatsapp</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

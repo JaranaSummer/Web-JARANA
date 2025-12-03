@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="admin-panel">
+    <h3 class="admin-title">Editar RRPP: {{ rrpp.nombre }}</h3>
+    <form method="POST" enctype="multipart/form-data">
+        <label>Localidad</label>
+        <input type="text" name="localidad" value="{{ rrpp.localidad }}" required>
+        
+        <label>Nombre</label>
+        <input type="text" name="nombre" value="{{ rrpp.nombre }}" required>
+        
+        <label>Foto (Dejar vacío para mantener la actual)</label>
+        <input type="file" name="foto" accept="image/*">
+        
+        <label>Usuario Instagram</label>
+        <input type="text" name="instagram" value="{{ rrpp.instagram }}" required>
+        
+        <label>Número WhatsApp</label>
+        <input type="text" name="whatsapp" value="{{ rrpp.whatsapp }}" required>
+        
+        <button type="submit">Guardar Cambios</button>
+        <a href="/admin" class="back-link" style="text-align:center; margin-top:10px;">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

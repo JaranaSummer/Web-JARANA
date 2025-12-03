@@ -1,0 +1,337 @@
+:root {
+    --bg-dark: #1a1b20;
+    --primary-green: #2db480;
+    --cream-bg: #ffd786;
+    --card-dark: #2a2a2a;
+    --text-white: #eeeeee;
+    --text-dark: #1a1a1a;
+    --input-bg: #333333;
+    --danger-red: #d9534f;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: radial-gradient(circle at center, #2a2c35 0%, #111113 100%);
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 1. Login Oculto */
+.hidden-login {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 40px;
+    opacity: 0; z-index: 999; cursor: default;
+}
+
+/* 2. HEADER & LOGO */
+.header-section { 
+    text-align: center; 
+    margin-bottom: 20px; 
+    margin-top: 10px; 
+}
+
+.logo-img { 
+    max-width: 140px; 
+    width: 100%;
+    display: block; 
+    margin: 0 auto 10px; 
+}
+
+.header-text { 
+    font-size: 14px; 
+    text-transform: uppercase; 
+    font-weight: 700; 
+    color: #ccc; 
+    letter-spacing: 1px; 
+    white-space: pre-line; 
+    line-height: 1.5;
+}
+
+/* 3. NAVEGACIÓN */
+.nav-toggle {
+    display: flex; justify-content: center; gap: 15px; margin-bottom: 20px;
+}
+.nav-btn {
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    border: none;
+}
+.nav-btn.inactive { 
+    background-color: #e0e0e0; 
+    color: var(--text-dark); 
+    opacity: 0.8;
+}
+.nav-btn.active, .nav-btn:hover { 
+    background-color: var(--primary-green); 
+    color: var(--text-dark); 
+    box-shadow: 0 0 15px rgba(99, 160, 137, 0.4);
+    opacity: 1;
+}
+
+/* 4. GRID RRPP */
+.rrpp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.rrpp-card {
+    background-color: var(--card-dark);
+    border-radius: 15px; padding: 15px;
+    text-align: center; border-bottom: 2px solid var(--primary-green);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+.rrpp-loc { background: #eee; color: #222; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; width: 100%; }
+.rrpp-name { color: rgba(255,255,255,0.9); font-size: 14px; font-weight: bold; }
+.rrpp-photo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-green); }
+.social-link { text-decoration: none; color: white; background: #333; padding: 6px 10px; border-radius: 20px; font-size: 10px; display: flex; align-items: center; justify-content: center; gap: 5px; width: 100%; transition: transform 0.2s;}
+.social-link:hover { transform: scale(1.05); }
+.social-link.wa { background: #25D366; color: #222; font-weight: bold;}
+.social-link.ig { background: linear-gradient(45deg, #f09433, #bc1888); font-weight: bold; }
+
+/* --- 5. ACORDEÓN TRANSPORTES --- */
+
+/* --- 5. ACORDEÓN TRANSPORTES (SOLUCIÓN DEFINITIVA) --- */
+
+details {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+summary {
+    background-color: var(--bg-dark);
+    border: 2px solid var(--primary-green);
+    color: white;
+    padding: 15px;
+    border-radius: 50px; /* Redondo al inicio */
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    list-style: none;
+    text-align: center;
+    position: relative;
+    z-index: 20; /* Siempre encima */
+    
+    /* CAMBIO 1: Transición suave de 0.4s para todo */
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+summary:hover {
+    box-shadow: 0 0 15px rgba(99, 160, 137, 0.4);
+}
+
+summary::-webkit-details-marker { display: none; }
+
+/* ESTADO ABIERTO */
+details[open] summary {
+    background-color: var(--cream-bg);
+    color: var(--text-dark);
+    border-color: var(--cream-bg);
+    
+    /* El botón se vuelve cuadrado abajo SUAVEMENTE */
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* CAJA DE CONTENIDO */
+.details-content {
+    background-color: var(--cream-bg);
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    
+    /* CAMBIO 2: Sincronización de esquinas (MAGIA) */
+    /* Hacemos que la caja nazca REDONDA arriba también (50px). 
+       Así coincide con la forma del botón y no asoman puntas. */
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    
+    padding: 20px;
+    padding-top: 20px; 
+    margin-top: -5px; /* Pequeño solapamiento para sellar la unión */
+    
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+    /* Animación de apertura */
+    animation: openSmooth 0.5s forwards;
+    transform-origin: top center;
+}
+
+/* Animación personalizada */
+@keyframes openSmooth {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+        /* Al inicio es redonda (coincide con el botón cerrado) */
+        border-top-left-radius: 50px;
+        border-top-right-radius: 50px;
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        /* Al final se vuelve cuadrada arriba (coincide con el botón abierto) */
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+}
+
+/* TARJETA TRANSPORTE */
+.trans-card {
+    background-color: #222b;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 2px solid #3fe296;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header-strip {
+    background-color: var(--primary-green);
+    color: #1a1a1a;
+    font-weight: 800;
+    text-align: center;
+    padding: 8px;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.card-owner-strip {
+    background-color: #131313;
+    color: white;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.card-body-area {
+    background-color: rgba(0,0,0,0.05);
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.desc-text {
+    font-size: 11px;
+    font-weight: 700;
+    color: #1a1a1a;
+    padding: 5px;
+    border-radius: 50px;
+    background-color: #eee;
+    text-transform: uppercase;
+}
+
+.price-box {
+    background-color: #1c2b5a;
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+    font-weight: 900;
+    font-size: 18px;
+    border: 2px solid #eee;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    box-sizing: border-box;
+    margin: 5px 40px;
+    overflow: hidden;
+}
+
+.wa-button-strip {
+    display: block;
+    background-color: var(--primary-green);
+    color: #2a2a2a;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin: 0 15px 15px 15px;
+    border-radius: 50px;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.2s;
+}
+
+.wa-button-strip:hover {
+    filter: brightness(1.1);
+    background-color:  var(--primary-green);
+    border-color: #25D366;
+}
+
+/* 6. ADMIN & FORMULARIOS */
+.admin-panel { background: var(--card-dark); padding: 20px; border-radius: 15px; border: 1px solid #444; margin-bottom: 20px;}
+.admin-title { color: var(--primary-green); margin-bottom: 15px; font-size: 18px; text-transform: uppercase; border-bottom: 1px solid #444; padding-bottom: 10px;}
+
+input, select, textarea {
+    width: 100%; padding: 12px; margin: 8px 0;
+    background-color: var(--input-bg); border: 1px solid #555;
+    color: white; border-radius: 8px; font-family: inherit;
+    
+    /* CAMBIO: Bloqueamos el resize del textarea */
+    resize: none; 
+}
+input:focus { outline: none; border-color: var(--primary-green); }
+
+button {
+    width: 100%; padding: 12px; margin-top: 10px;
+    background-color: var(--primary-green); color: var(--text-dark);
+    border: none; border-radius: 8px; font-weight: 900;
+    cursor: pointer; text-transform: uppercase;
+}
+button:hover { filter: brightness(1.1); }
+.btn-danger { background-color: var(--danger-red); color: white; margin-top: 0;}
+
+table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; }
+th { text-align: left; color: #aaa; padding: 5px; border-bottom: 1px solid #444; }
+td { padding: 8px 5px; border-bottom: 1px solid #333; vertical-align: middle; }
+.back-link { color: #aaa; text-decoration: none; font-size: 12px; display: block; margin-bottom: 15px; }
+
+/* Footer */
+footer { text-align: center; padding: 20px; font-size: 11px; color: #666; margin-top: 30px; letter-spacing: 1px;}
+
+.texto-actualizacion { text-align: center; margin-bottom: 20px; }
+.texto-actualizacion p {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #ccc;
+    display: inline-block;
+    padding: 5px 15px;
+    border-bottom: 1px solid var(--primary-green);
+    white-space: pre-line;
+    line-height: 1.5;
+}
