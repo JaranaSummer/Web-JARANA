@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 
+# Carga variables de entorno si existe el archivo .env (para local)
 load_dotenv()
 
 app = Flask(__name__)
@@ -13,10 +14,26 @@ UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+# --- CONFIGURACIÓN DE LA BASE DE DATOS (MODIFICADO) ---
+# Intentamos obtener la URL de la base de datos de las variables de entorno (Render)
+database_url = os.getenv('DATABASE_URL')
+
+if database_url:
+    # Estamos en Render (Producción)
+    # Corrección: SQLAlchemy necesita que empiece con postgresql://, pero Render da postgres://
+    if database_url.startswith("postgres://"):
+        database_url = database_url.replace("postgres://", "postgresql://", 1)
+    
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+else:
+    # No hay variable, estamos en tu PC (Local)
+    # Usamos SQLite como siempre
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
+# -------------------------------------------------------
 
 os.makedirs(os.path.join(app.root_path, UPLOAD_FOLDER), exist_ok=True)
 
@@ -29,10 +46,10 @@ class RRPP(db.Model):
     localidad = db.Column(db.String(100))
     nombre = db.Column(db.String(100))
     foto_filename = db.Column(db.String(500))
-    foto_url = db.Column(db.String(500))      # NUEVO: URL externa
+    foto_url = db.Column(db.String(500))      
     instagram = db.Column(db.String(200))
     whatsapp = db.Column(db.String(200))
-    orden = db.Column(db.Integer, default=99) # NUEVO: Para ordenar (1 sale primero)
+    orden = db.Column(db.Integer, default=99) 
     visible = db.Column(db.Boolean, default=True)
 
 class Transporte(db.Model):
@@ -43,7 +60,7 @@ class Transporte(db.Model):
     descripcion = db.Column(db.String(200))
     precio = db.Column(db.String(50))
     whatsapp = db.Column(db.String(200))
-    orden = db.Column(db.Integer, default=99) # NUEVO
+    orden = db.Column(db.Integer, default=99) 
     visible = db.Column(db.Boolean, default=True)
 
 class Configuracion(db.Model):
@@ -56,8 +73,9 @@ class Configuracion(db.Model):
 
 @app.route('/')
 def index():
+    # Nota: Si la DB está vacía, esto podría dar error si no hay configuración
+    # Pero el bloque final 'with app.app_context()' se encarga de crearla.
     config = Configuracion.query.first()
-    # ORDENAMOS por 'orden' ascendente (1, 2, 3...)
     rrpps = RRPP.query.filter_by(visible=True).order_by(RRPP.orden.asc()).all()
     return render_template('index.html', rrpps=rrpps, config=config, page='rrpp')
 
@@ -66,7 +84,6 @@ def transportes():
     config = Configuracion.query.first()
     ciudades = db.session.query(Transporte.ciudad).distinct().all()
     lista_ciudades = [c[0] for c in ciudades]
-    # ORDENAMOS por 'orden' ascendente
     transportes_all = Transporte.query.filter_by(visible=True).order_by(Transporte.orden.asc()).all()
     return render_template('transportes.html', ciudades=lista_ciudades, transportes=transportes_all, config=config, page='transporte')
 
@@ -77,6 +94,8 @@ def login():
         usuario_real = os.getenv('ADMIN_USER')
         password_real = os.getenv('ADMIN_PASS')
         
+        # Ojo: Si no tienes ADMIN_USER en Render, esto podría fallar.
+        # Asegúrate de agregar ADMIN_USER y ADMIN_PASS en las Environment Variables de Render también.
         if request.form['username'] == usuario_real and request.form['password'] == password_real:
             session['logged_in'] = True
             return redirect(url_for('admin'))
@@ -104,9 +123,9 @@ def admin():
             filename = ''
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
+                # Guarda localmente (se borrará en Render al reiniciar, pero sirve temporalmente)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             
-            # Recuperamos el orden (si no ponen nada, ponemos 99)
             orden_val = request.form.get('orden')
             if not orden_val: orden_val = 99
 
@@ -157,7 +176,6 @@ def admin():
         db.session.commit()
         return redirect(url_for('admin'))
 
-    # Ordenamos también en el admin para que sea fácil encontrar
     rrpps = RRPP.query.order_by(RRPP.orden.asc()).all()
     transportes = Transporte.query.order_by(Transporte.orden.asc()).all()
     return render_template('admin.html', rrpps=rrpps, transportes=transportes, config=config)
@@ -204,8 +222,10 @@ def edit_transporte(id):
         return redirect(url_for('admin'))
     return render_template('edit_transporte.html', transporte=t)
 
+# --- CREACIÓN DE TABLAS INICIAL ---
 with app.app_context():
     db.create_all()
+    # Si la tabla de configuración está vacía, creamos el registro inicial
     if not Configuracion.query.first():
         db.session.add(Configuracion(
             texto_header="JARANA", 
