@@ -10,3 +10,6 @@ __pycache__/
 
 # Carpeta de imágenes subidas (normalmente no se suben al código fuente)
 static/uploads/
+.env
+.env
+.env
