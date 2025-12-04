@@ -6,8 +6,17 @@
     <div class="rrpp-card">
         <div class="rrpp-loc">{{ rrpp.localidad }}</div>
         <div class="rrpp-name">{{ rrpp.nombre }}</div>
-        <img src="{{ url_for('static', filename='uploads/' + rrpp.foto_filename) }}" alt="Foto" class="rrpp-photo">
-         <a href="https://www.instagram.com/{{ rrpp.instagram }}" target="_blank" class="social-link ig">Instagram</a>
+        
+        <!-- FOTO INTELIGENTE -->
+        {% if rrpp.foto_url %}
+            <img src="{{ rrpp.foto_url }}" alt="Foto" class="rrpp-photo">
+        {% elif rrpp.foto_filename %}
+            <img src="{{ url_for('static', filename='uploads/' + rrpp.foto_filename) }}" alt="Foto" class="rrpp-photo">
+        {% else %}
+            <img src="https://placehold.co/80x80/222/white?text=SF" alt="Sin Foto" class="rrpp-photo">
+        {% endif %}
+        
+        <a href="https://www.instagram.com/{{ rrpp.instagram }}" target="_blank" class="social-link ig">Instagram</a>
         <a href="https://wa.me/{{ rrpp.whatsapp }}" target="_blank" class="social-link wa">Whatsapp</a>
     </div>
     {% endfor %}

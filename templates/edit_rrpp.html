@@ -1,16 +1,23 @@
 {% extends 'layout.html' %}
 {% block content %}
 <div class="admin-panel">
-    <h3 class="admin-title">Editar RRPP: {{ rrpp.nombre }}</h3>
+    <h3 class="admin-title">Editar RRPP</h3>
     <form method="POST" enctype="multipart/form-data">
+        
+        <label>Orden de aparición (1 = Primero)</label>
+        <input type="number" name="orden" value="{{ rrpp.orden }}">
+
         <label>Localidad</label>
         <input type="text" name="localidad" value="{{ rrpp.localidad }}" required>
         
         <label>Nombre</label>
         <input type="text" name="nombre" value="{{ rrpp.nombre }}" required>
         
-        <label>Foto (Dejar vacío para mantener la actual)</label>
+        <label>FOTO: Cambiar Archivo</label>
         <input type="file" name="foto" accept="image/*">
+        
+        <label>FOTO: Link Externo (URL)</label>
+        <input type="text" name="foto_url" value="{{ rrpp.foto_url or '' }}" placeholder="https://...">
         
         <label>Usuario Instagram</label>
         <input type="text" name="instagram" value="{{ rrpp.instagram }}" required>

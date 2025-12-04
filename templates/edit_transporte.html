@@ -3,6 +3,10 @@
 <div class="admin-panel">
     <h3 class="admin-title">Editar Transporte</h3>
     <form method="POST">
+        
+        <label>Orden de aparición</label>
+        <input type="number" name="orden" value="{{ transporte.orden }}">
+
         <label>Ciudad</label>
         <input type="text" name="ciudad" value="{{ transporte.ciudad }}" required>
         
