@@ -82,9 +82,22 @@ def index():
 @app.route('/transportes')
 def transportes():
     config = Configuracion.query.first()
-    ciudades = db.session.query(Transporte.ciudad).distinct().all()
-    lista_ciudades = [c[0] for c in ciudades]
+    
+    # 1. Traemos TODOS los transportes ordenados por tu número de 'orden'
     transportes_all = Transporte.query.filter_by(visible=True).order_by(Transporte.orden.asc()).all()
+    
+    # 2. LOGICA INTELIGENTE: Creamos la lista de ciudades basándonos en el orden de los transportes.
+    # La ciudad aparecerá tan pronto como aparezca su primer transporte en la lista.
+    lista_ciudades = []
+    ciudades_vistas = set()
+    
+    for t in transportes_all:
+        # .strip() elimina espacios accidentales al principio o final del nombre de la ciudad
+        nombre_ciudad = t.ciudad.strip() 
+        if nombre_ciudad not in ciudades_vistas:
+            lista_ciudades.append(nombre_ciudad)
+            ciudades_vistas.add(nombre_ciudad)
+            
     return render_template('transportes.html', ciudades=lista_ciudades, transportes=transportes_all, config=config, page='transporte')
 
 @app.route('/login', methods=['GET', 'POST'])

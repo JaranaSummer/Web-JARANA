@@ -1,10 +1,19 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+<!-- Estilos internos para solucionar los saltos de línea -->
+<style>
+    /* Esto hace que los Enters se vean como saltos de línea reales */
+    .texto-con-saltos {
+        white-space: pre-wrap; 
+    }
+</style>
+
 <!-- Aquí conectamos con la base de datos -->
 {% if config.texto_actualizacion %}
 <div class="texto-actualizacion">
-    <p>{{ config.texto_actualizacion }}</p>
+    <!-- Aplicamos la clase aquí también por si acaso -->
+    <p class="texto-con-saltos">{{ config.texto_actualizacion }}</p>
 </div>
 {% endif %}
 
@@ -14,13 +23,15 @@
         <summary>▼ {{ ciudad }}</summary>
         <div class="details-content">
             {% for t in transportes %}
-                {% if t.ciudad == ciudad %}
+                <!-- El strip() ayuda a que coincidan aunque tengan un espacio extra -->
+                {% if t.ciudad.strip() == ciudad %}
                 <div class="trans-card">
                     <div class="card-header-strip">{{ t.nombre_taxi }}</div>
                     <div class="card-owner-strip">{{ t.dueno }}</div>
                     <div class="card-body-area">
                         <div class="price-box">
-                            <div class="desc-text">{{ t.descripcion }}</div>
+                            <!-- AQUI: Agregamos la clase para respetar saltos de linea en descripcion -->
+                            <div class="desc-text texto-con-saltos">{{ t.descripcion }}</div>
                             <div style="font-size: 22px; margin-top: 5px;">{{ t.precio }}</div>
                         </div>
                     </div>
