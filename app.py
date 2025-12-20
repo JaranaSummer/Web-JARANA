@@ -66,7 +66,7 @@ def index():
     rrpps = RRPP.query.filter_by(visible=True).order_by(RRPP.orden.asc()).all()
     return render_template('index.html', rrpps=rrpps, config=config, page='rrpp')
 
-@app.route('/transportes')
+@app.route('/transportes/')
 def transportes():
     config = Configuracion.query.first()
     transportes_all = Transporte.query.filter_by(visible=True).order_by(Transporte.orden.asc()).all()
@@ -77,7 +77,7 @@ def transportes():
         if nombre_ciudad not in ciudades_vistas:
             lista_ciudades.append(nombre_ciudad)
             ciudades_vistas.add(nombre_ciudad)
-    return render_template('transportes.html', ciudades=lista_ciudades, transportes=transportes_all, config=config, page='transporte')
+    return render_template('transportes.html', ciudades=lista_ciudades, transportes=transportes_all, config=config, page='transportes')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

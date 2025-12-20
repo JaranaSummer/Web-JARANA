@@ -26,7 +26,8 @@
             {% if page %}
             <div class="nav-toggle">
                 <a href="{{ url_for('index') }}" class="nav-btn {% if page == 'rrpp' %}active{% else %}inactive{% endif %}">RRPP</a>
-                <a href="{{ url_for('transportes') }}" class="nav-btn {% if page == 'transporte' %}active{% else %}inactive{% endif %}">Transportes</a>            </div>
+                <a href="{{ url_for('transportes') }}" class="nav-btn {% if page == 'transportes' %}active{% else %}inactive{% endif %}">Transportes</a>
+            </div>
             {% endif %}
 
             {% block content %}{% endblock %}
