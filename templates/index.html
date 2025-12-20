@@ -7,14 +7,20 @@
         <div class="rrpp-loc">{{ rrpp.localidad }}</div>
         <div class="rrpp-name">{{ rrpp.nombre }}</div>
         
-        <!-- FOTO INTELIGENTE -->
-        {% if rrpp.foto_url %}
-            <img src="{{ rrpp.foto_url }}" alt="Foto" class="rrpp-photo">
-        {% elif rrpp.foto_filename %}
-            <img src="{{ url_for('static', filename='uploads/' + rrpp.foto_filename) }}" alt="Foto" class="rrpp-photo">
-        {% else %}
-            <img src="https://placehold.co/80x80/222/white?text=SF" alt="Sin Foto" class="rrpp-photo">
-        {% endif %}
+        <!-- FOTO INTELIGENTE (Instagram Auto-proxy) -->
+        <div style="width: 80px; height: 80px; margin: 0 auto 10px; overflow: hidden; border-radius: 50%; border: 2px solid var(--primary-green);">
+            {% if rrpp.foto_url and "instagram.com" not in rrpp.foto_url and "fbcdn.net" not in rrpp.foto_url %}
+                <!-- Si pegaste un link manual permanente (ej: ImgBB), usamos ese -->
+                <img src="{{ rrpp.foto_url }}" alt="Foto" class="rrpp-photo" style="width: 100%; height: 100%; object-fit: cover;">
+            {% else %}
+                <!-- Si no hay link, o el link era de Instagram (que caducan), usamos el Proxy -->
+                <img src="https://unavatar.io/instagram/{{ rrpp.instagram }}?fallback=https://placehold.co/80x80/222/white?text={{ rrpp.nombre[0] }}" 
+                     alt="Foto de {{ rrpp.nombre }}" 
+                     class="rrpp-photo"
+                     style="width: 100%; height: 100%; object-fit: cover;"
+                     onerror="this.src='https://placehold.co/80x80/222/white?text={{ rrpp.nombre[0] }}'">
+            {% endif %}
+        </div>
         
         <a href="https://www.instagram.com/{{ rrpp.instagram }}" target="_blank" class="social-link ig">Instagram</a>
         <a href="https://wa.me/{{ rrpp.whatsapp }}" target="_blank" class="social-link wa">Whatsapp</a>
