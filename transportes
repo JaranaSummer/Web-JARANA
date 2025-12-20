@@ -26,9 +26,8 @@ Argentina</div>
             <!-- Navegación (Solo se muestra si page está definido, oculta en login/admin) -->
             
             <div class="nav-toggle">
-                <a href="/" class="nav-btn inactive">RRPP</a>
-                <a href="/transportes" class="nav-btn active">Transportes</a>
-            </div>
+                <a href="index.html" class="nav-btn inactive">RRPP</a>
+                <a href="transportes" class="nav-btn active">Transportes</a>            </div>
             
 
             
