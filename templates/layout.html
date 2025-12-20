@@ -25,9 +25,8 @@
             <!-- Navegación (Solo se muestra si page está definido, oculta en login/admin) -->
             {% if page %}
             <div class="nav-toggle">
-                <a href="/" class="nav-btn {% if page == 'rrpp' %}active{% else %}inactive{% endif %}">RRPP</a>
-                <a href="/transportes" class="nav-btn {% if page == 'transporte' %}active{% else %}inactive{% endif %}">Transportes</a>
-            </div>
+                <a href="{{ url_for('index') }}" class="nav-btn {% if page == 'rrpp' %}active{% else %}inactive{% endif %}">RRPP</a>
+                <a href="{{ url_for('transportes') }}" class="nav-btn {% if page == 'transporte' %}active{% else %}inactive{% endif %}">Transportes</a>            </div>
             {% endif %}
 
             {% block content %}{% endblock %}
