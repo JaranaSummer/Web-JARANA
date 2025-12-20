@@ -7,18 +7,13 @@
         <div class="rrpp-loc">{{ rrpp.localidad }}</div>
         <div class="rrpp-name">{{ rrpp.nombre }}</div>
         
-        <!-- FOTO INTELIGENTE (Instagram Auto-proxy) -->
-        <div style="width: 80px; height: 80px; margin: 0 auto 10px; overflow: hidden; border-radius: 50%; border: 2px solid var(--primary-green);">
-            {% if rrpp.foto_url and "instagram.com" not in rrpp.foto_url and "fbcdn.net" not in rrpp.foto_url %}
-                <!-- Si pegaste un link manual permanente (ej: ImgBB), usamos ese -->
-                <img src="{{ rrpp.foto_url }}" alt="Foto" class="rrpp-photo" style="width: 100%; height: 100%; object-fit: cover;">
+        <!-- FOTO REAL Y SEGURA -->
+        <div style="width: 80px; height: 80px; margin: 0 auto 10px; overflow: hidden; border-radius: 50%; border: 2px solid var(--primary-green); background: #222; display: flex; align-items: center; justify-content: center;">
+            {% if rrpp.foto_url %}
+                <img src="{{ rrpp.foto_url }}" alt="Foto de {{ rrpp.nombre }}" class="rrpp-photo" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div style="display: none; color: white; font-weight: bold; font-size: 24px;">{{ rrpp.nombre[0] }}</div>
             {% else %}
-                <!-- Si no hay link, o el link era de Instagram (que caducan), usamos el Proxy -->
-                <img src="https://unavatar.io/instagram/{{ rrpp.instagram }}?fallback=https://placehold.co/80x80/222/white?text={{ rrpp.nombre[0] }}" 
-                     alt="Foto de {{ rrpp.nombre }}" 
-                     class="rrpp-photo"
-                     style="width: 100%; height: 100%; object-fit: cover;"
-                     onerror="this.src='https://placehold.co/80x80/222/white?text={{ rrpp.nombre[0] }}'">
+                <div style="color: white; font-weight: bold; font-size: 24px;">{{ rrpp.nombre[0] }}</div>
             {% endif %}
         </div>
         
