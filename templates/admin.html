@@ -13,54 +13,53 @@
     {% endwith %}
 
     <!-- BOTÓN DE PUBLICACIÓN -->
-    <div class="admin-panel" style="background: #1a1a1a; border: 2px solid #28a745;">
+    <div class="admin-panel" style="background: #1a1a1a; border: 2px solid #28a745; margin-bottom: 20px; padding: 15px; border-radius: 8px;">
         <h3 style="color: #28a745; margin-top: 0;">🚀 Control de Publicación</h3>
         <p style="font-size: 12px; color: #ccc;">Pulsa aquí para actualizar la web que ven los clientes.</p>
         <form action="/publicar" method="POST">
-            <button type="submit" style="background: #28a745; font-weight: bold; padding: 15px;">ACTUALIZAR WEB CLIENTES</button>
+            <button type="submit" style="background: #28a745; font-weight: bold; padding: 15px; color: white; width: 100%; border: none; border-radius: 5px; cursor: pointer;">ACTUALIZAR WEB CLIENTES</button>
         </form>
     </div>
 
-    <a href="/" class="back-link">← Volver a la App</a>
+    <a href="/" class="back-link" style="color: #aaa; text-decoration: none; display: block; margin-bottom: 20px;">← Volver a la App</a>
 
-    <!-- AGREGAR RRPP (CON SUBIDA DE ARCHIVO) -->
-    <div class="admin-panel">
-        <h3 class="admin-title">Agregar RRPP</h3>
-        <form method="POST" enctype="multipart/form-data"> <!-- IMPORTANTE: enctype -->
+    <!-- GESTIONAR RRPP -->
+    <div class="admin-panel" style="background: #222; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+        <h3 class="admin-title" style="color: var(--primary-green); margin-top: 0;">Agregar RRPP</h3>
+        <form method="POST" enctype="multipart/form-data">
             <input type="hidden" name="tipo" value="add_rrpp">
             
             <div style="display:flex; gap: 15px; margin-bottom: 5px;">
                 <div style="width: 80px;">
                     <label style="font-size: 12px; color: #aaa;">Orden</label>
-                    <input type="number" name="orden" value="99" style="text-align: center; padding: 12px 5px;">
+                    <input type="number" name="orden" value="99" style="text-align: center; padding: 12px 5px; width: 100%;">
                 </div>
                 <div style="flex: 1;">
                     <label style="font-size: 12px; color: #aaa;">Localidad</label>
-                    <input type="text" name="localidad" placeholder="Ej: Arenales" required>
+                    <input type="text" name="localidad" placeholder="Ej: Arenales" required style="width: 100%;">
                 </div>
             </div>
 
             <label style="font-size: 12px; color: #aaa;">Nombre</label>
-            <input type="text" name="nombre" placeholder="Nombre" required>
+            <input type="text" name="nombre" placeholder="Nombre" required style="width: 100%;">
             
-            <!-- CAMPO DE FOTO DUAL -->
-            <label style="font-size: 12px; color: #aaa; margin-top: 10px; display: block;">FOTO: Sube un archivo (Recomendado)</label>
-            <input type="file" name="foto" accept="image/*" style="padding: 10px 0;">
+            <label style="font-size: 12px; color: #aaa; margin-top: 10px; display: block;">FOTO: Sube un archivo</label>
+            <input type="file" name="foto" accept="image/*" style="padding: 10px 0; color: white;">
             
             <label style="font-size: 12px; color: #aaa;">O pega un Link (Opcional)</label>
-            <input type="text" name="foto_url" placeholder="https://...">
+            <input type="text" name="foto_url" placeholder="https://..." style="width: 100%;">
 
-            <input type="text" name="instagram" placeholder="Instagram" required>
-            <input type="text" name="whatsapp" placeholder="WhatsApp (sin +)" required>
+            <input type="text" name="instagram" placeholder="Instagram" required style="width: 100%;">
+            <input type="text" name="whatsapp" placeholder="WhatsApp (sin +)" required style="width: 100%;">
             
-            <button type="submit">Guardar RRPP</button>
+            <button type="submit" style="width: 100%; margin-top: 10px;">Guardar RRPP</button>
         </form>
     </div>
 
     <!-- LISTA RRPP -->
-    <div class="admin-panel">
+    <div class="admin-panel" style="background: #222; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
         <h3 class="admin-title">Lista de RRPP</h3>
-        <table>
+        <table style="width: 100%; border-collapse: collapse;">
             {% for r in rrpps %}
             <tr style="opacity: {% if r.visible %}1{% else %}0.5{% endif %}; border-bottom: 1px solid #333;">
                 <td style="color:var(--primary-green); font-weight:bold; padding: 10px 0;">{{ r.orden }}</td>
@@ -72,11 +71,64 @@
                     <a href="{{ url_for('edit_rrpp', id=r.id) }}" style="background:#4a90e2; color:white; padding:5px 10px; border-radius:5px; text-decoration:none; font-size:10px;">EDIT</a>
                     <form method="POST" style="margin:0;">
                         <input type="hidden" name="tipo" value="toggle"><input type="hidden" name="tabla" value="rrpp"><input type="hidden" name="id" value="{{ r.id }}">
-                        <button type="submit" style="background:{% if r.visible %}#f0ad4e{% else %}#999{% endif %}; width:auto; padding:5px 10px; font-size:10px; margin:0;">👁️</button>
+                        <button type="submit" style="background:{% if r.visible %}#f0ad4e{% else %}#999{% endif %}; width:auto; padding:5px 10px; font-size:10px; margin:0; border:none; border-radius:5px; color:white;">👁️</button>
                     </form>
                     <form method="POST" style="margin:0;">
                         <input type="hidden" name="tipo" value="delete"><input type="hidden" name="tabla" value="rrpp"><input type="hidden" name="id" value="{{ r.id }}">
-                        <button type="submit" class="btn-danger" style="width:auto; padding:5px 10px; font-size:10px; margin:0;">X</button>
+                        <button type="submit" style="background:#d9534f; width:auto; padding:5px 10px; font-size:10px; margin:0; border:none; border-radius:5px; color:white;">X</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- GESTIONAR TRANSPORTES -->
+    <div class="admin-panel" style="background: #222; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+        <h3 class="admin-title" style="color: var(--primary-green); margin-top: 0;">Agregar Transporte</h3>
+        <form method="POST">
+            <input type="hidden" name="tipo" value="add_transporte">
+            
+            <div style="display:flex; gap: 15px; margin-bottom: 5px;">
+                <div style="width: 80px;">
+                    <label style="font-size: 12px; color: #aaa;">Orden</label>
+                    <input type="number" name="orden" value="99" style="text-align: center; padding: 12px 5px; width: 100%;">
+                </div>
+                <div style="flex: 1;">
+                    <label style="font-size: 12px; color: #aaa;">Ciudad</label>
+                    <input type="text" name="ciudad" placeholder="Ciudad" required style="width: 100%;">
+                </div>
+            </div>
+
+            <input type="text" name="nombre_taxi" placeholder="Nombre Empresa" required style="width: 100%;">
+            <input type="text" name="dueno" placeholder="Dueño" required style="width: 100%;">
+            <input type="text" name="descripcion" placeholder="Descripción" required style="width: 100%;">
+            <input type="text" name="precio" placeholder="Precio" required style="width: 100%;">
+            <input type="text" name="whatsapp" placeholder="WhatsApp" required style="width: 100%;">
+            <button type="submit" style="width: 100%; margin-top: 10px;">Guardar Transporte</button>
+        </form>
+    </div>
+
+    <!-- LISTA TRANSPORTES -->
+    <div class="admin-panel" style="background: #222; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+        <h3 class="admin-title">Lista de Transportes</h3>
+        <table style="width: 100%; border-collapse: collapse;">
+            {% for t in transportes %}
+            <tr style="opacity: {% if t.visible %}1{% else %}0.5{% endif %}; border-bottom: 1px solid #333;">
+                <td style="color:var(--primary-green); font-weight:bold; padding: 10px 0;">{{ t.orden }}</td>
+                <td>
+                    <div style="font-weight:bold;">{{ t.nombre_taxi }}</div>
+                    <div style="font-size:10px;">{{ t.ciudad }}</div>
+                </td>
+                <td style="text-align:right; display:flex; justify-content:flex-end; gap:5px; padding: 10px 0;">
+                    <a href="{{ url_for('edit_transporte', id=t.id) }}" style="background:#4a90e2; color:white; padding:5px 10px; border-radius:5px; text-decoration:none; font-size:10px;">EDIT</a>
+                    <form method="POST" style="margin:0;">
+                        <input type="hidden" name="tipo" value="toggle"><input type="hidden" name="tabla" value="transporte"><input type="hidden" name="id" value="{{ t.id }}">
+                        <button type="submit" style="background:{% if t.visible %}#f0ad4e{% else %}#999{% endif %}; width:auto; padding:5px 10px; font-size:10px; margin:0; border:none; border-radius:5px; color:white;">👁️</button>
+                    </form>
+                    <form method="POST" style="margin:0;">
+                        <input type="hidden" name="tipo" value="delete"><input type="hidden" name="tabla" value="transporte"><input type="hidden" name="id" value="{{ t.id }}">
+                        <button type="submit" style="background:#d9534f; width:auto; padding:5px 10px; font-size:10px; margin:0; border:none; border-radius:5px; color:white;">X</button>
                     </form>
                 </td>
             </tr>
@@ -85,17 +137,17 @@
     </div>
 
     <!-- CONFIGURACIÓN DE TEXTOS -->
-    <div class="admin-panel">
-        <h3 class="admin-title">Textos de la Web</h3>
+    <div class="admin-panel" style="background: #222; padding: 20px; border-radius: 8px;">
+        <h3 class="admin-title" style="color: var(--primary-green); margin-top: 0;">Textos de la Web</h3>
         <form method="POST">
             <input type="hidden" name="tipo" value="config_textos">
             <label>Logo Texto</label>
-            <textarea name="texto_header" rows="2" required>{{ config.texto_header }}</textarea>
+            <textarea name="texto_header" rows="2" required style="width: 100%;">{{ config.texto_header }}</textarea>
             <label>Actualización</label>
-            <textarea name="texto_actualizacion" rows="2" required>{{ config.texto_actualizacion }}</textarea>
+            <textarea name="texto_actualizacion" rows="2" required style="width: 100%;">{{ config.texto_actualizacion }}</textarea>
             <label>Footer</label>
-            <textarea name="texto_footer" rows="2" required>{{ config.texto_footer }}</textarea>
-            <button type="submit">Actualizar Todo</button>
+            <textarea name="texto_footer" rows="2" required style="width: 100%;">{{ config.texto_footer }}</textarea>
+            <button type="submit" style="width: 100%; margin-top: 10px;">Actualizar Todo</button>
         </form>
     </div>
 </div>
