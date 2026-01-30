@@ -22,10 +22,12 @@ cloudinary.config(
 # --- CONFIGURACIÓN DE LA BASE DE DATOS ---
 database_url = os.getenv('DATABASE_URL')
 if database_url:
+    # Corrección para SQLAlchemy 2.0+ en Render/Heroku
     if database_url.startswith("postgres://"):
         database_url = database_url.replace("postgres://", "postgresql://", 1)
     app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 else:
+    # Fallback para local
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -99,7 +101,6 @@ def admin():
             foto_final_url = request.form.get('foto_url')
             file = request.files.get('foto')
             
-            # Si subes un archivo, tiene prioridad y se sube a Cloudinary
             if file and file.filename != '':
                 upload_result = cloudinary.uploader.upload(file)
                 foto_final_url = upload_result['secure_url']
@@ -135,6 +136,9 @@ def admin():
             else: Transporte.query.filter_by(id=request.form['id']).delete()
 
         elif tipo == 'config_textos':
+            if not config:
+                config = Configuracion(texto_header="", texto_footer="", texto_actualizacion="")
+                db.session.add(config)
             config.texto_actualizacion = request.form['texto_actualizacion']
             config.texto_footer = request.form['texto_footer']
             config.texto_header = request.form['texto_header']
@@ -192,4 +196,6 @@ with app.app_context():
     db.create_all()
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Esto es vital para Render: escuchar en el puerto que ellos asignan
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
