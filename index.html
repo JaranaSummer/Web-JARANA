@@ -16,8 +16,8 @@
         <div class="header-section">
             <img src="static/logo.png" alt="Logo" class="logo-img">
             
-            <div class="header-text">GENERAL ARENALES - BS AS
-ARGENTINA</div>
+            <div class="header-text">GENERAL ARENALES
+BS AS - ARGENTINA</div>
             
         </div>
 
