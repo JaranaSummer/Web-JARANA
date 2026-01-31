@@ -16,9 +16,6 @@
         <div class="header-section">
             <img src="static/logo.png" alt="Logo" class="logo-img">
             
-            <div class="header-text">General Arenales - Bs As
-Argentina</div>
-            
         </div>
 
         <!-- Contenido Principal (Empuja el footer) -->
@@ -49,8 +46,7 @@ Argentina</div>
         <!-- Footer -->
         <footer>
             
-            <p style="white-space: pre-wrap;">JARANA © 2025 
-- Todos los derechos reservados. -</p>
+            SYSTEM ERROR: NO CONFIG
             
         </footer>
     </div>
