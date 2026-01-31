@@ -137,7 +137,7 @@
     </div>
 
     <!-- CONFIGURACIÓN DE TEXTOS -->
-    <div class="admin-panel" style="background: #222; padding: 20px; border-radius: 8px;">
+    <div class="admin-panel" style="background: #222; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
         <h3 class="admin-title" style="color: var(--primary-green); margin-top: 0;">Textos de la Web</h3>
         <form method="POST">
             <input type="hidden" name="tipo" value="config_textos">
@@ -150,5 +150,19 @@
             <button type="submit" style="width: 100%; margin-top: 10px;">Actualizar Todo</button>
         </form>
     </div>
+
+    <!-- MANTENIMIENTO DE BASE DE DATOS -->
+    <div class="admin-panel" style="background: #1a1a1a; border: 1px solid #444; padding: 20px; border-radius: 8px; margin-top: 30px;">
+        <h3 style="color: #666; margin-top: 0; font-size: 16px;">⚙️ Mantenimiento Jarana</h3>
+        <p style="font-size: 11px; color: #888; line-height: 1.4;">
+            Si pasaron más de 7 días desde el último cambio, debes reactivar la base de datos porque está pausada.
+        </p>
+        <div style="background: #000; padding: 10px; border-radius: 5px; margin: 10px 0;">
+            <div style="font-size: 12px; color: #aaa; margin-bottom: 5px;"><b>Usuario:</b> jarana.summer@gmail.com</div>
+            <div style="font-size: 12px; color: #aaa;"><b>Contraseña:</b> la de Ulises (1ra Mayus 2da Minus)</div>
+        </div>
+        <a href="https://supabase.com/dashboard" target="_blank" style="display: block; background: #444; color: white; text-align: center; padding: 10px; border-radius: 5px; text-decoration: none; font-size: 12px; font-weight: bold;">ACTIVAR BASE DE DATOS (SUPABASE)</a>
+    </div>
+
 </div>
 {% endblock %}
