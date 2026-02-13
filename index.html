@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <!-- Login Oculto (Zona clickeable arriba) -->
-        <a href="https://web-jarana.onrender.com/login" class="hidden-login"></a>
+        <a href="https://jarana.alwaysdata.net/login" class="hidden-login"></a>
 
         <!-- Header -->
         <div class="header-section">
